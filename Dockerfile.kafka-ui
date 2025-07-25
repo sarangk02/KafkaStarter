@@ -1,0 +1,25 @@
+# ------------------------------------------------------------------------------
+# Kafka UI Dockerfile
+#
+# This Dockerfile builds a container for Kafka UI using the official image.
+# It configures the UI to connect to a Kafka cluster running on host.docker.internal:9094.
+#
+# Instructions:
+# 1. Build the image:
+#    docker build -t my-kafka-ui -f Dockerfile.kafka-ui .
+#
+# 2. Ensure your Kafka broker is running before starting Kafka UI.
+#
+# 3. Run the container:
+#    docker run --name kafka-ui --link kafka -p 8080:8080 my-kafka-ui
+#
+# Exposed Ports:
+# - 8080: Kafka UI web interface.
+# ------------------------------------------------------------------------------
+
+FROM provectuslabs/kafka-ui:latest
+
+ENV KAFKA_CLUSTERS_0_NAME=LocalhostCluster \
+	KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=host.docker.internal:9094
+
+EXPOSE 8080

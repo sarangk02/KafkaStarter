@@ -1,0 +1,31 @@
+# ------------------------------------------------------------------------------
+# Dockerfile for Kafka Server (KRaft mode) using Bitnami Kafka 4.0 on Debian 12
+#
+# This image configures a single-node Kafka broker and controller using KRaft mode.
+#
+# Ports exposed:
+#   - 9092: Kafka broker (PLAINTEXT)
+#   - 9094: Kafka broker (PLAINTEXT_DOCKER, for Docker host access)
+#
+# Build:
+#   docker build -t my-kafka-server -f Dockerfile.kafka-server .
+#
+# Run:
+#   docker run --name kafka -p 9092:9092 -p 9094:9094 my-kafka-server
+# ------------------------------------------------------------------------------
+
+FROM bitnami/kafka:4.0-debian-12
+
+ENV KAFKA_CFG_NODE_ID=1 \
+	KAFKA_KRAFT_CLUSTER_ID=kraft-cluster-1234 \
+	KAFKA_CFG_PROCESS_ROLES="broker,controller" \
+	KAFKA_CFG_CONTROLLER_QUORUM_VOTERS="1@localhost:9093" \
+	KAFKA_CFG_ADVERTISED_LISTENERS="PLAINTEXT://localhost:9092,PLAINTEXT_DOCKER://host.docker.internal:9094" \
+	KAFKA_CFG_LISTENERS="PLAINTEXT://0.0.0.0:9092,PLAINTEXT_DOCKER://0.0.0.0:9094,CONTROLLER://0.0.0.0:9093" \
+	KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP="PLAINTEXT:PLAINTEXT,PLAINTEXT_DOCKER:PLAINTEXT,CONTROLLER:PLAINTEXT" \
+	KAFKA_CFG_CONTROLLER_LISTENER_NAMES="CONTROLLER" \
+	KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE="true" \
+	KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+
+EXPOSE 9092
+EXPOSE 9094
