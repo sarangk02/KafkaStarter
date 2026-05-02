@@ -1,5 +1,4 @@
 
-
 # KafkaStarter
 
 Welcome to KafkaStarter—a hands-on, beginner-friendly project designed to kickstart your journey into the world of Apache Kafka! Built with the help of AI, this project is perfect for anyone eager to learn Kafka fundamentals through practical Python examples. You'll validate email addresses, stream them with Kafka, and visualize everything with a modern UI—all powered by Docker for easy setup. Whether you're new to event streaming or just want a fun way to experiment, KafkaStarter is your launchpad.
